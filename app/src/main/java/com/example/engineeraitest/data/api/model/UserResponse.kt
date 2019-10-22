@@ -6,6 +6,7 @@ data class UserResponse(
     @SerializedName("data") var data: UserDataInnerResponse?
 )
 
+//It was too late when I found out has_more field, so I've decided to leave it as it is
 data class UserDataInnerResponse(
     @SerializedName("users") var users: List<UserDataResponse>
 )
