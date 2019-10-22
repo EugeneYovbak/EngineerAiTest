@@ -13,7 +13,7 @@ class UserRepositoryImpl(private val mUserApiService: UserApiService) : UserRepo
     override fun getUsers(offset: Int?, limit: Int?): Single<List<User>> {
         return mUserApiService.getUsers(offset, limit)
             .map {
-                if (!it.isSuccessful) throw HttpException(it)
+                if (!it.isSuccessful || !it.body()?.status!!) throw HttpException(it)
                 it.body()?.data?.users!!
             }
             .toFlowable()
