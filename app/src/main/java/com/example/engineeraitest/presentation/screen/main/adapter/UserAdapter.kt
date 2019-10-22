@@ -1,7 +1,9 @@
 package com.example.engineeraitest.presentation.screen.main.adapter
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.request.RequestOptions
 import com.example.engineeraitest.R
@@ -12,6 +14,10 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_user.*
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+
+    companion object {
+        private const val ITEMS_ROW_COUNT = 2
+    }
 
     private val mUserList = ArrayList<User>()
 
@@ -44,6 +50,27 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
                 .into(iv_userImage)
 
             tv_userName.text = user.name
+
+            if (user.items.size % 2 == 0) {
+                iv_oddItem.visibility = View.GONE
+                setItems(containerView.context, user.items)
+            } else {
+                iv_oddItem.visibility = View.VISIBLE
+
+                GlideApp.with(containerView.context)
+                    .load(user.items[0])
+                    .placeholder(R.color.color_placeholder)
+                    .error(R.color.color_placeholder)
+                    .into(iv_oddItem)
+                setItems(containerView.context, user.items.subList(1, user.items.size))
+            }
+        }
+
+        private fun setItems(context: Context, items: List<String>) {
+            rv_items.layoutManager = GridLayoutManager(context, ITEMS_ROW_COUNT)
+            val itemAdapter = ItemAdapter()
+            rv_items.adapter = itemAdapter
+            itemAdapter.setItemList(items)
         }
     }
 }

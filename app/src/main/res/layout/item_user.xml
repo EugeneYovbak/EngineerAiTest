@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingStart="@dimen/main_padding"
-    android:paddingTop="@dimen/small_padding"
-    android:paddingEnd="@dimen/main_padding">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/main_padding">
 
         <ImageView
             android:id="@+id/iv_userImage"
@@ -28,8 +26,29 @@
             android:lines="1"
             android:textColor="@color/color_text" />
 
-
-
     </RelativeLayout>
+
+    <com.example.engineeraitest.presentation.tools.SquareImageView
+        android:id="@+id/iv_oddItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_padding"
+        android:layout_marginTop="@dimen/small_padding"
+        android:layout_marginEnd="@dimen/main_padding"
+        android:layout_marginBottom="@dimen/small_padding"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/small_padding"
+        android:paddingEnd="@dimen/small_padding" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/small_padding"
+        android:background="@color/color_placeholder" />
 
 </LinearLayout>
