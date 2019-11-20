@@ -13,8 +13,8 @@ import com.example.engineeraitest.R;
 import com.example.engineeraitest.app.EngineerAiTestApp;
 import com.example.engineeraitest.domain.model.User;
 import com.example.engineeraitest.presentation.base.BaseActivity;
-import com.example.engineeraitest.presentation.base.DataWrapper;
 import com.example.engineeraitest.presentation.screen.main.adapter.UserAdapter;
+import com.example.engineeraitest.presentation.screen.main.presenter.MainPresenter;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainView {
 
     private UserAdapter mAdapter;
 
@@ -33,25 +33,24 @@ public class MainActivity extends BaseActivity {
     RecyclerView mUsersRecyclerView;
 
     @Inject
-    MainViewModel mViewModel;
+    MainPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
         EngineerAiTestApp.getDependencyGraph().initMainComponent().inject(this);
+        mPresenter.onAttach(this);
+
         setSupportActionBar(mToolbar);
-
         initUserList();
-
-        mViewModel.getUsersData().observe(this, this::handleUsers);
-        mViewModel.getUsers();
+        mPresenter.getUsers();
     }
 
     private void initUserList() {
         mAdapter = new UserAdapter();
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mUsersRecyclerView.setLayoutManager(layoutManager);
         mUsersRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -69,32 +68,37 @@ public class MainActivity extends BaseActivity {
                     int pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
                     if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                        if (!isInProgress()) mViewModel.getUsers();
+                        if (!isInProgress()) mPresenter.getUsers();
                     }
                 }
             }
         });
-
         mUsersRecyclerView.setAdapter(mAdapter);
     }
 
-    private void handleUsers(DataWrapper<List<User>> dataWrapper) {
-        switch (dataWrapper.getStatus()) {
-            case LOADING:
-                showProgress();
-                break;
-            case SUCCESS:
-                hideProgress();
-                mAdapter.addUserList(dataWrapper.getData());
-                break;
-            case ERROR:
-                hideProgress();
-                Toast.makeText(this, dataWrapper.getThrowable().getMessage(), Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void showLoadingIndicator() {
+        showProgress();
+    }
+
+    @Override
+    public void hideLoadingIndicator() {
+        hideProgress();
+    }
+
+    @Override
+    public void usersLoadSuccess(List<User> userList) {
+        mAdapter.addUserList(userList);
+    }
+
+    @Override
+    public void usersLoadError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onDestroy() {
+        mPresenter.onDetach();
         EngineerAiTestApp.getDependencyGraph().releaseMainComponent();
         super.onDestroy();
     }

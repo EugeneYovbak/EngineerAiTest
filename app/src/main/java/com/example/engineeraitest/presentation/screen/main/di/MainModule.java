@@ -1,7 +1,7 @@
 package com.example.engineeraitest.presentation.screen.main.di;
 
 import com.example.engineeraitest.domain.UserRepository;
-import com.example.engineeraitest.presentation.screen.main.MainViewModel;
+import com.example.engineeraitest.presentation.screen.main.presenter.MainPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,7 +11,7 @@ public class MainModule {
 
     @Provides
     @MainScope
-    MainViewModel provideMainViewModel(UserRepository userRepository) {
-        return new MainViewModel(userRepository);
+    MainPresenter provideMainViewModel(UserRepository userRepository) {
+        return new MainPresenter(userRepository);
     }
 }
