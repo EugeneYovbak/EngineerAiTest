@@ -28,9 +28,9 @@ class MainViewModel(private var mUserRepository: UserRepository) : BaseViewModel
             .subscribe(
                 {
                     offset += it.size
-                    usersData.value = DataWrapper(DataWrapper.Status.SUCCESS, data = it)
+                    usersData.value = DataWrapper(DataWrapper.Status.SUCCESS, it)
                 },
-                { usersData.value = DataWrapper(DataWrapper.Status.ERROR, throwable = it) }
+                { usersData.value = DataWrapper(DataWrapper.Status.ERROR, it) }
             )
         compositeDisposable.add(usersDisposable)
     }

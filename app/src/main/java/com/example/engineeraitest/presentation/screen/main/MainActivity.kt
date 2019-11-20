@@ -37,7 +37,7 @@ class MainActivity : BaseActivity() {
         mAdapter = UserAdapter()
         rv_users.layoutManager = LinearLayoutManager(this)
         rv_users.addPagingScrollListener {
-            if (!isInProgress()) mViewModel.getUsers()
+            if (!isInProgress) mViewModel.getUsers()
         }
         rv_users.adapter = mAdapter
     }
