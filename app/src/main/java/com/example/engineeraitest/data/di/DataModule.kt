@@ -2,7 +2,7 @@ package com.example.engineeraitest.data.di
 
 import com.example.engineeraitest.data.api.UserApiService
 import com.example.engineeraitest.data.repository.UserRepositoryImpl
-import com.example.engineeraitest.domain.exception.UserRepository
+import com.example.engineeraitest.domain.UserRepository
 import org.koin.dsl.module
 
 val dataModule = module {

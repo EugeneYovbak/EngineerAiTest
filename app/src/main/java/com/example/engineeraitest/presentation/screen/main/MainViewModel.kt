@@ -1,7 +1,7 @@
 package com.example.engineeraitest.presentation.screen.main
 
 import androidx.lifecycle.LiveData
-import com.example.engineeraitest.domain.exception.UserRepository
+import com.example.engineeraitest.domain.UserRepository
 import com.example.engineeraitest.domain.model.User
 import com.example.engineeraitest.presentation.base.BaseViewModel
 import com.example.engineeraitest.presentation.base.DataWrapper
