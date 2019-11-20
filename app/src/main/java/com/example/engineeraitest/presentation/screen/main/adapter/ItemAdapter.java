@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.engineeraitest.R;
-import com.example.engineeraitest.app.di.GlideApp;
+import com.example.engineeraitest.app.GlideApp;
 
 import org.jetbrains.annotations.NotNull;
 

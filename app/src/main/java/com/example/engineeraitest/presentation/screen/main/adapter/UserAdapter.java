@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.engineeraitest.R;
-import com.example.engineeraitest.app.di.GlideApp;
+import com.example.engineeraitest.app.GlideApp;
 import com.example.engineeraitest.domain.model.User;
 
 import org.jetbrains.annotations.NotNull;
